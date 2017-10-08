@@ -2,6 +2,7 @@ import WordSenseDisambguation
 import pytumblr
 import httplib, urllib, base64, urllib2, json
 import requests
+import json
 
 def img_tag_category_call(link):
 	print "\nFEATURES - TAGS AND CATEGORIES \n"
@@ -42,13 +43,13 @@ tags=tags[:5]
 print tags
 final_quotes=[]
 for tag in tags:
-    #print tag
-    #print "\n\n"
     quote_data = client.tagged(tag+' quote', filter='text',limit=50)
     for x in quote_data:
         if (str(x['type']))=='quote':
-            print x['text']
-            final_quotes.append(x['text'])
-            print "------------------------------"
-
-print final_quotes
+            if( len(x['text']) <250):
+            	final_quotes.append(x['text'])
+            	print x['text']
+            	print "------------------------------"
+if len(final_quotes)>12:
+	final_quotes=final_quotes[:11]
+print json.dumps(final_quotes)
